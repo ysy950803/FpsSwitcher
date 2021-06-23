@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FpsSwitcher</string>
+
+    <string name="fps_tile_label">60 Hz</string>
+</resources>
