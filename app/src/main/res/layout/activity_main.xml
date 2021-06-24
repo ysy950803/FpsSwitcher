@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ViewStub xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity" />
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/btn_to_perm_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="开启ROOT权限" />
+
+    <Button
+        android:id="@+id/btn_to_access_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="开启无障碍服务权限" />
+
+    <Button
+        android:id="@+id/btn_to_auto_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="开启自启动权限" />
+
+    <Button
+        android:id="@+id/btn_love_support"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="赞赏支持" />
+
+</LinearLayout>

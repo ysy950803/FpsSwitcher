@@ -11,11 +11,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+                <data
+                    android:host="localhost"
+                    android:scheme="${applicationId}" />
             </intent-filter>
 
             <intent-filter>
@@ -23,12 +27,18 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".FpsActivity"
+            android:excludeFromRecents="true"
+            android:process=":fps"
+            android:theme="@style/AppTheme.Transparent" />
+
         <service
             android:name=".SwitcherTileService"
             android:icon="@drawable/icon_60fps_white_24dp"
             android:label="@string/fps_tile_label"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
-            android:process=":tile">
+            android:process=":fps">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
@@ -37,7 +47,8 @@
         <service
             android:name=".FpsAccessibilityService"
             android:label="@string/app_name"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:process=":fps">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
             </intent-filter>
