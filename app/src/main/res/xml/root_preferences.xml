@@ -1,0 +1,69 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Preference
+        app:iconSpaceReserved="false"
+        app:key="basic_info" />
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="若为普通设备">
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="btn_to_access_settings"
+            app:title="开启无障碍服务权限" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="若为ROOT设备">
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="to_perm_center"
+            app:title="开启ROOT权限" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="其他">
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="to_auto_start"
+            app:summary="若功能不稳定，请尝试授予自启动权限"
+            app:title="开启自启动权限" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="关于">
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="love_support"
+            app:summary="如果喜欢，一切随缘，理想消费，健康生活"
+            app:title="赞赏支持" />
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="developer_home"
+            app:summary="\@ysy950803，关注我，发现更多"
+            app:title="酷安主页" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="帮助">
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="app_help_tips" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

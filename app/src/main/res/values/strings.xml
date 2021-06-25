@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">FpsSwitcher</string>
-
     <string name="fps_tile_label">60 Hz</string>
-    <string name="accessibility_service_description">Please enable the first switcher for clicking refresh-rate automatically.</string>
+
+    <string name="accessibility_service_description">Please enable the first switcher for clicking refresh rate automatically.</string>
+    <string name="support_high_fps">This device supports up to %d Hz refresh rate.</string>
+    <string name="not_support_high_fps">Sorry, this device doesn\'t support high refresh rate.</string>
+
+    <string name="title_activity_settings">FpsSwitcher Settings</string>
 </resources>

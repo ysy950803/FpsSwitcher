@@ -16,7 +16,7 @@ class SwitcherTileService : TileService() {
 
     private var mActiveIcon: Icon? = null
     private var mInActiveIcon: Icon? = null
-    private var mHighFpsSupport = false
+    private val mHighFpsSupport by lazy { FpsUtils.isHighFpsSupport() }
 
     override fun attachBaseContext(newBase: Context?) {
         super.attachBaseContext(newBase)
@@ -25,7 +25,6 @@ class SwitcherTileService : TileService() {
         mInActiveIcon =
             mInActiveIcon ?: Icon.createWithResource(this, R.drawable.icon_60fps_white_24dp)
                 .setTint(0x80FFFFFF.toInt())
-        mHighFpsSupport = FpsUtils.isHighFpsSupport()
     }
 
     override fun onStartListening() {
@@ -63,7 +62,7 @@ class SwitcherTileService : TileService() {
             }
             updateTile(!enabled)
         } else {
-            startActivityAndCollapse(Intent(this, MainActivity::class.java).apply {
+            startActivityAndCollapse(Intent(this, SettingsActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             })
         }
