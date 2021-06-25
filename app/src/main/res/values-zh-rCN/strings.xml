@@ -2,5 +2,7 @@
     <string name="app_name">FPS开关</string>
 
     <string name="fps_tile_label">60 Hz</string>
-    <string name="accessibility_service_description">由于全局修改屏幕刷新率需要系统权限，所以只能曲线救国使用无障碍服务来实现自动点击切换。待会儿系统的提示会很吓人，但应用不会做任何其他多余的事情，请放心开启第一个开关。</string>
+    <string name="accessibility_service_description">"温馨提示：
+由于全局修改屏幕刷新率需要系统权限，所以只能曲线救国使用无障碍服务来实现自动点击切换。
+待会儿系统的提示会很吓人，但应用不会做任何其他多余的事情，请放心开启第一个开关。"</string>
 </resources>

@@ -3,6 +3,7 @@ package com.ysy.fpsswitcher
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Icon
+import android.os.IBinder
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import android.util.Log
@@ -75,5 +76,35 @@ class SwitcherTileService : TileService() {
             state = if (active) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
             updateTile()
         }
+    }
+
+    override fun onStopListening() {
+        super.onStopListening()
+        Log.d(TAG, "onStopListening")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG, "onDestroy")
+    }
+
+    override fun onBind(intent: Intent?): IBinder? {
+        Log.d(TAG, "onBind")
+        return super.onBind(intent)
+    }
+
+    override fun onUnbind(intent: Intent?): Boolean {
+        Log.d(TAG, "onUnbind")
+        return super.onUnbind(intent)
+    }
+
+    override fun onTileAdded() {
+        super.onTileAdded()
+        Log.d(TAG, "onTileAdded")
+    }
+
+    override fun onTileRemoved() {
+        super.onTileRemoved()
+        Log.d(TAG, "onTileRemoved")
     }
 }

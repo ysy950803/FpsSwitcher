@@ -2,5 +2,5 @@
     <string name="app_name">FpsSwitcher</string>
 
     <string name="fps_tile_label">60 Hz</string>
-    <string name="accessibility_service_description">Please enable the first switcher for auto click refresh rate.</string>
+    <string name="accessibility_service_description">Please enable the first switcher for clicking refresh-rate automatically.</string>
 </resources>
