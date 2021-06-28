@@ -7,4 +7,4 @@
     android:description="@string/accessibility_service_description"
     android:notificationTimeout="100"
     android:packageNames="com.xiaomi.misettings"
-    android:settingsActivity="com.ysy.fpsswitcher.MainActivity" />
+    android:settingsActivity="com.ysy.fpsswitcher.SettingsActivity" />

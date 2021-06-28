@@ -1,5 +1,12 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <SwitchPreferenceCompat
+        app:defaultValue="true"
+        app:iconSpaceReserved="false"
+        app:key="master_switch"
+        app:summary="当自动点击影响到你手动设置刷新率时，请关闭此开关"
+        app:title="功能总开关" />
+
     <Preference
         app:iconSpaceReserved="false"
         app:key="basic_info" />
@@ -10,7 +17,7 @@
 
         <Preference
             app:iconSpaceReserved="false"
-            app:key="btn_to_access_settings"
+            app:key="to_access_settings"
             app:title="开启无障碍服务权限" />
 
     </PreferenceCategory>
@@ -23,6 +30,17 @@
             app:iconSpaceReserved="false"
             app:key="to_perm_center"
             app:title="开启ROOT权限" />
+
+        <SeekBarPreference
+            app:defaultValue="60"
+            app:enabled="false"
+            app:iconSpaceReserved="false"
+            app:key="root_user_refresh_rate"
+            app:min="30"
+            app:showSeekBarValue="true"
+            app:summary="设置后开关将在最低刷新率和自定义的最高刷新率之间切换"
+            app:title="自定义最高刷新率"
+            app:updatesContinuously="false" />
 
     </PreferenceCategory>
 

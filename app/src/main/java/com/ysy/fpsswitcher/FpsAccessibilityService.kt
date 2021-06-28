@@ -20,7 +20,7 @@ class FpsAccessibilityService : AccessibilityService() {
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent) {
-        if (hasFpsChanged) return
+        if (hasFpsChanged || !FpsUtils.isAccessibilityServiceAllowed()) return
         event.source?.let { findNextNode(it) }
     }
 

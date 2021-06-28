@@ -6,6 +6,8 @@ import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SeekBarPreference
+import com.blankj.utilcode.util.ToastUtils
 import java.net.URLEncoder
 
 class SettingsActivity : AppCompatActivity() {
@@ -29,14 +31,16 @@ class SettingsActivity : AppCompatActivity() {
 
             findPreference<Preference>("basic_info")?.apply {
                 summary = if (FpsUtils.isHighFpsSupport()) {
-                    getString(R.string.support_high_fps, FpsUtils.getPeakRefreshRate())
+                    getString(
+                        R.string.support_high_fps, FpsUtils.getPeakRefreshRate(),
+                        FpsUtils.getMinRefreshRate()
+                    )
                 } else {
                     getString(R.string.not_support_high_fps)
                 }
             }
 
-            findPreference<Preference>("btn_to_access_settings")?.apply {
-                updateAccessSettingsSummary(this)
+            findPreference<Preference>("to_access_settings")?.apply {
                 setOnPreferenceClickListener {
                     // 无障碍服务权限对应每个应用的具体设置页是个fragment，无法直接启动，只能启动设置主页
                     startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS).apply {
@@ -47,7 +51,6 @@ class SettingsActivity : AppCompatActivity() {
             }
 
             findPreference<Preference>("to_perm_center")?.apply {
-                updateRootSettingsSummary(this)
                 if (!FpsUtils.isDeviceRooted) {
                     isEnabled = false
                     return@apply
@@ -72,6 +75,27 @@ class SettingsActivity : AppCompatActivity() {
                         })
                     }
                     true
+                }
+            }
+
+            findPreference<SeekBarPreference>("root_user_refresh_rate")?.apply {
+                max = FpsUtils.getPeakRefreshRate()
+                if (!FpsUtils.isAppRooted()) {
+                    isEnabled = false
+                    return@apply
+                } else {
+                    isEnabled = true
+                }
+                setOnPreferenceChangeListener { _, newValue ->
+                    if (newValue is Int && FpsUtils.isRefreshRateValid(newValue)) {
+                        if (newValue < FpsUtils.getUserRefreshRate()) {
+                            FpsUtils.putUserRefreshRateRoot(newValue)
+                        }
+                        true
+                    } else {
+                        ToastUtils.showShort("不在设备允许的刷新率范围内")
+                        false
+                    }
                 }
             }
 
@@ -140,11 +164,20 @@ class SettingsActivity : AppCompatActivity() {
 
         override fun onResume() {
             super.onResume()
-            findPreference<Preference>("btn_to_access_settings")?.apply {
+            findPreference<Preference>("to_access_settings")?.apply {
                 updateAccessSettingsSummary(this)
             }
             findPreference<Preference>("to_perm_center")?.apply {
                 updateRootSettingsSummary(this)
+            }
+            findPreference<SeekBarPreference>("root_user_refresh_rate")?.apply {
+                value = FpsUtils.getUserRefreshRate()
+                if (!FpsUtils.isAppRooted()) {
+                    isEnabled = false
+                    return@apply
+                } else {
+                    isEnabled = true
+                }
             }
         }
 

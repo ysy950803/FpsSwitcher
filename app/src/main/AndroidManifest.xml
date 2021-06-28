@@ -13,6 +13,7 @@
 
         <activity
             android:name=".SettingsActivity"
+            android:excludeFromRecents="true"
             android:label="@string/title_activity_settings"
             android:launchMode="singleTask">
             <intent-filter>
@@ -32,15 +33,13 @@
         <activity
             android:name=".FpsActivity"
             android:excludeFromRecents="true"
-            android:process=":fps"
             android:theme="@style/AppTheme.Transparent" />
 
         <service
             android:name=".SwitcherTileService"
             android:icon="@drawable/icon_60fps_white_24dp"
             android:label="@string/fps_tile_label"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
-            android:process=":fps">
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
@@ -52,8 +51,7 @@
         <service
             android:name=".FpsAccessibilityService"
             android:label="@string/app_name"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
-            android:process=":fps">
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
             </intent-filter>
