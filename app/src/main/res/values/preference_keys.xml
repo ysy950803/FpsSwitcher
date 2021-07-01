@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="basic_info">basic_info</string>
+    <string name="to_access_settings">to_access_settings</string>
+    <string name="master_switch">master_switch</string>
+    <string name="to_perm_center">to_perm_center</string>
+    <string name="set_user_refresh_rate">set_user_refresh_rate</string>
+    <string name="to_auto_start">to_auto_start</string>
+    <string name="love_support">love_support</string>
+    <string name="developer_home">developer_home</string>
+    <string name="app_help_tips">app_help_tips</string>
+</resources>

@@ -8,9 +8,27 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SeekBarPreference
 import com.blankj.utilcode.util.ToastUtils
+import com.ysy.fpsswitcher.FpsUtils.DEFAULT_FPS_VALUE
 import java.net.URLEncoder
+import kotlin.math.abs
 
 class SettingsActivity : AppCompatActivity() {
+
+    companion object {
+        val SP_KEY_BASIC_INFO by lazy { FSApp.getContext().getString(R.string.basic_info) }
+        val SP_KEY_TO_ACCESS_SETTINGS by lazy {
+            FSApp.getContext().getString(R.string.to_access_settings)
+        }
+        val SP_KEY_MASTER_SWITCH by lazy { FSApp.getContext().getString(R.string.master_switch) }
+        val SP_KEY_TO_PERM_CENTER by lazy { FSApp.getContext().getString(R.string.to_perm_center) }
+        val SP_KEY_SET_USER_REFRESH_RATE by lazy {
+            FSApp.getContext().getString(R.string.set_user_refresh_rate)
+        }
+        val SP_KEY_TO_AUTO_START by lazy { FSApp.getContext().getString(R.string.to_auto_start) }
+        val SP_KEY_LOVE_SUPPORT by lazy { FSApp.getContext().getString(R.string.love_support) }
+        val SP_KEY_DEVELOPER_HOME by lazy { FSApp.getContext().getString(R.string.developer_home) }
+        val SP_KEY_APP_HELP_TIPS by lazy { FSApp.getContext().getString(R.string.app_help_tips) }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,18 +47,19 @@ class SettingsActivity : AppCompatActivity() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
-            findPreference<Preference>("basic_info")?.apply {
+            findPreference<Preference>(SP_KEY_BASIC_INFO)?.apply {
                 summary = if (FpsUtils.isHighFpsSupport()) {
-                    getString(
-                        R.string.support_high_fps, FpsUtils.getPeakRefreshRate(),
-                        FpsUtils.getMinRefreshRate()
-                    )
+                    """
+                        温馨提示：
+                        该设备支持的刷新率：${FpsUtils.getAllRefreshRates().joinToString()} Hz。
+                        首次使用前请一定先按如下提示设置，完成后再次点击通知栏快捷开关即可生效。
+                    """.trimIndent()
                 } else {
                     getString(R.string.not_support_high_fps)
                 }
             }
 
-            findPreference<Preference>("to_access_settings")?.apply {
+            findPreference<Preference>(SP_KEY_TO_ACCESS_SETTINGS)?.apply {
                 setOnPreferenceClickListener {
                     // 无障碍服务权限对应每个应用的具体设置页是个fragment，无法直接启动，只能启动设置主页
                     startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS).apply {
@@ -50,7 +69,7 @@ class SettingsActivity : AppCompatActivity() {
                 }
             }
 
-            findPreference<Preference>("to_perm_center")?.apply {
+            findPreference<Preference>(SP_KEY_TO_PERM_CENTER)?.apply {
                 if (!FpsUtils.isDeviceRooted) {
                     isEnabled = false
                     return@apply
@@ -78,20 +97,21 @@ class SettingsActivity : AppCompatActivity() {
                 }
             }
 
-            findPreference<SeekBarPreference>("root_user_refresh_rate")?.apply {
+            findPreference<SeekBarPreference>(SP_KEY_SET_USER_REFRESH_RATE)?.apply {
                 max = FpsUtils.getPeakRefreshRate()
-                if (!FpsUtils.isAppRooted()) {
-                    isEnabled = false
-                    return@apply
-                } else {
-                    isEnabled = true
-                }
                 setOnPreferenceChangeListener { _, newValue ->
                     if (newValue is Int && FpsUtils.isRefreshRateValid(newValue)) {
-                        if (newValue < FpsUtils.getUserRefreshRate()) {
-                            FpsUtils.putUserRefreshRateRoot(newValue)
+                        if (FpsUtils.isAppRooted()) {
+                            if (newValue < FpsUtils.getUserRefreshRate()) {
+                                FpsUtils.putUserRefreshRateRoot(newValue)
+                            }
+                            true
+                        } else {
+                            val rates = FpsUtils.getAllRefreshRates()
+                            val diffs = rates.map { abs(newValue - it) }
+                            value = rates[diffs.indexOf(diffs.minOrNull() ?: DEFAULT_FPS_VALUE)]
+                            false
                         }
-                        true
                     } else {
                         ToastUtils.showShort("不在设备允许的刷新率范围内")
                         false
@@ -99,7 +119,7 @@ class SettingsActivity : AppCompatActivity() {
                 }
             }
 
-            findPreference<Preference>("to_auto_start")?.setOnPreferenceClickListener {
+            findPreference<Preference>(SP_KEY_TO_AUTO_START)?.setOnPreferenceClickListener {
                 startActivity(Intent().apply {
                     setClassName(
                         "com.miui.securitycenter",
@@ -110,7 +130,7 @@ class SettingsActivity : AppCompatActivity() {
                 true
             }
 
-            findPreference<Preference>("love_support")?.setOnPreferenceClickListener {
+            findPreference<Preference>(SP_KEY_LOVE_SUPPORT)?.setOnPreferenceClickListener {
                 try {
                     startActivity(
                         Intent.parseUri(
@@ -134,7 +154,7 @@ class SettingsActivity : AppCompatActivity() {
                 true
             }
 
-            findPreference<Preference>("developer_home")?.setOnPreferenceClickListener {
+            findPreference<Preference>(SP_KEY_DEVELOPER_HOME)?.setOnPreferenceClickListener {
                 try {
                     startActivity(
                         Intent.parseUri(
@@ -153,7 +173,7 @@ class SettingsActivity : AppCompatActivity() {
                 true
             }
 
-            findPreference<Preference>("app_help_tips")?.apply {
+            findPreference<Preference>(SP_KEY_APP_HELP_TIPS)?.apply {
                 summary = """
                     1. 此工具只支持 MIUI 哦；
                     2. 长按通知栏FPS快捷开关可再次进入此页面；
@@ -164,27 +184,25 @@ class SettingsActivity : AppCompatActivity() {
 
         override fun onResume() {
             super.onResume()
-            findPreference<Preference>("to_access_settings")?.apply {
+            findPreference<Preference>(SP_KEY_TO_ACCESS_SETTINGS)?.apply {
                 updateAccessSettingsSummary(this)
             }
-            findPreference<Preference>("to_perm_center")?.apply {
+            findPreference<Preference>(SP_KEY_TO_PERM_CENTER)?.apply {
                 updateRootSettingsSummary(this)
             }
-            findPreference<SeekBarPreference>("root_user_refresh_rate")?.apply {
-                value = FpsUtils.getUserRefreshRate()
-                if (!FpsUtils.isAppRooted()) {
-                    isEnabled = false
-                    return@apply
-                } else {
-                    isEnabled = true
-                }
+            findPreference<SeekBarPreference>(SP_KEY_SET_USER_REFRESH_RATE)?.apply {
+                isVisible = FpsUtils.isHighFpsSupport()
+                if (isVisible) value = FpsUtils.getUserSetHighFps()
             }
         }
 
         private fun updateAccessSettingsSummary(preference: Preference) {
+            val masterSwitch = findPreference<Preference>(SP_KEY_MASTER_SWITCH)
             preference.summary = if (FpsUtils.isAccessibilityServiceEnabled()) {
+                masterSwitch?.isVisible = true
                 "当前已开启"
             } else {
+                masterSwitch?.isVisible = false
                 "当前未开启，请依次点击“已下载的应用->FPS开关”"
             }
         }

@@ -1,15 +1,8 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <SwitchPreferenceCompat
-        app:defaultValue="true"
-        app:iconSpaceReserved="false"
-        app:key="master_switch"
-        app:summary="当自动点击影响到你手动设置刷新率时，请关闭此开关"
-        app:title="功能总开关" />
-
     <Preference
         app:iconSpaceReserved="false"
-        app:key="basic_info" />
+        app:key="@string/basic_info" />
 
     <PreferenceCategory
         app:iconSpaceReserved="false"
@@ -17,8 +10,15 @@
 
         <Preference
             app:iconSpaceReserved="false"
-            app:key="to_access_settings"
+            app:key="@string/to_access_settings"
             app:title="开启无障碍服务权限" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+            app:key="@string/master_switch"
+            app:summary="当自动点击影响到你手动设置刷新率时，请临时关闭此开关"
+            app:title="功能总开关" />
 
     </PreferenceCategory>
 
@@ -28,19 +28,8 @@
 
         <Preference
             app:iconSpaceReserved="false"
-            app:key="to_perm_center"
+            app:key="@string/to_perm_center"
             app:title="开启ROOT权限" />
-
-        <SeekBarPreference
-            app:defaultValue="60"
-            app:enabled="false"
-            app:iconSpaceReserved="false"
-            app:key="root_user_refresh_rate"
-            app:min="30"
-            app:showSeekBarValue="true"
-            app:summary="设置后开关将在最低刷新率和自定义的最高刷新率之间切换"
-            app:title="自定义最高刷新率"
-            app:updatesContinuously="false" />
 
     </PreferenceCategory>
 
@@ -48,9 +37,18 @@
         app:iconSpaceReserved="false"
         app:title="其他">
 
+        <SeekBarPreference
+            app:iconSpaceReserved="false"
+            app:key="@string/set_user_refresh_rate"
+            app:min="60"
+            app:showSeekBarValue="true"
+            app:summary="设置后开关将在最低刷新率和自定义的最高刷新率之间切换（仅ROOT设备可无级调节）"
+            app:title="自定义最高刷新率"
+            app:updatesContinuously="false" />
+
         <Preference
             app:iconSpaceReserved="false"
-            app:key="to_auto_start"
+            app:key="@string/to_auto_start"
             app:summary="若功能不稳定，请尝试授予自启动权限"
             app:title="开启自启动权限" />
 
@@ -62,13 +60,13 @@
 
         <Preference
             app:iconSpaceReserved="false"
-            app:key="love_support"
+            app:key="@string/love_support"
             app:summary="如果喜欢，一切随缘，理想消费，健康生活"
             app:title="赞赏支持" />
 
         <Preference
             app:iconSpaceReserved="false"
-            app:key="developer_home"
+            app:key="@string/developer_home"
             app:summary="\@ysy950803，关注我，发现更多"
             app:title="酷安主页" />
 
@@ -80,7 +78,7 @@
 
         <Preference
             app:iconSpaceReserved="false"
-            app:key="app_help_tips" />
+            app:key="@string/app_help_tips" />
 
     </PreferenceCategory>
 
